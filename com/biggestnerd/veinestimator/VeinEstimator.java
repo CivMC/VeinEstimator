@@ -52,9 +52,10 @@ public class VeinEstimator {
 				if(distance(x - radius, z - radius) > sqr) continue;
 				for(int y = minY; y <= maxY; y++) {
 					if(Math.random() < Math.max(getOreChance(x - radius, y, z - radius), 0)) {
+						//System.out.println(x + ", " + y + ", " + z);
 						ores++;
 						if(drawImage) {
-							graphics.setPaint(Color.WHITE);
+							graphics.setPaint(heat(y));
 							graphics.drawLine(x, z, x, z);
 						}
 					}
@@ -87,6 +88,14 @@ public class VeinEstimator {
 	
 	private double distance(int x, int z) {
 		return (x * x) + (z * z);
+	}
+	
+	private Color heat(int y) {
+		float value = ((float)y - minY) /(maxY - minY);
+		int r = (int) (255 * value);
+		int g = (int) (255 * (1 - value));
+		int b = (int) Math.min(255, 255 * (2 * value));
+		return new Color(r,g,b);
 	}
 	
 	public static void main(String[] args) {
