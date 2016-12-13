@@ -13,4 +13,7 @@ Arguments don't require any flags, they're in order
 | areaSpan      | double | max random difference from the average                                                                                            |
 | heightLength  | double | distance between height slope change                                                                                              |
 | densityLength | double | distance between density slope change (large number = wide vein, small number = compact vein)   |
+| radius        | integer | the radius of the world |
+| minY          | integer | minimum y ores can spawn |
+| maxY          | integer | maximum y ores can spawn
 | drawImage     | boolean | whether or not the program should visualize the vein in an image (default true, not required)|
