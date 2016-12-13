@@ -2,6 +2,8 @@
 
 Arguments don't require any flags, they're in order
 
+Example: java -jar VeinEstimator.jar 1 1 0.4 3 -0.2 10 10 10 80 1000 1 16
+
 | Name          | Type   | Description                                                                                                                       |
 |---------------|--------|-----------------------------------------------------------------------------------------------------------------------------------|
 | heightSeed    | long   | seed for the height noise generator                                                                                               |
