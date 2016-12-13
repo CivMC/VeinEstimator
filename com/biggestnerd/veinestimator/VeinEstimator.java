@@ -18,9 +18,11 @@ public class VeinEstimator {
 	private double heightLength;
 	private double densityLength;
 	private int radius;
+	private int minY;
+	private int maxY;
 	
 	public VeinEstimator(long heightSeed, long densitySeed, double density, double maxSpan, double densityBonus,
-			double areaHeight, double areaSpan, double heightLength, double densityLength, int radius) {
+			double areaHeight, double areaSpan, double heightLength, double densityLength, int radius, int minY, int maxY) {
 		heightGen = new SimplexNoiseGenerator(heightSeed);
 		densityGen = new SimplexNoiseGenerator(densitySeed);
 		this.density = density;
@@ -31,6 +33,8 @@ public class VeinEstimator {
 		this.heightLength = heightLength;
 		this.densityLength = densityLength;
 		this.radius = radius;
+		this.minY = minY;
+		this.maxY = maxY;
 	}
 
 	private void calculate(boolean drawImage) {
@@ -46,7 +50,7 @@ public class VeinEstimator {
 		for(int x = 0; x < two; x++) {
 			for(int z = 0; z < two; z++) {
 				if(distance(x - radius, z - radius) > sqr) continue;
-				for(int y = 1; y <= 16; y++) {
+				for(int y = minY; y <= maxY; y++) {
 					if(Math.random() < Math.max(getOreChance(x - radius, y, z - radius), 0)) {
 						ores++;
 						if(drawImage) {
@@ -88,7 +92,7 @@ public class VeinEstimator {
 	public static void main(String[] args) {
 		VeinEstimator estimator;
 		boolean drawImage = true;
-		if(args.length < 10) {
+		if(args.length < 12) {
 			estimator = getDefault();
 		}
 		try {
@@ -102,11 +106,13 @@ public class VeinEstimator {
 			double heightLength = Double.parseDouble(args[7]);
 			double densityLength = Double.parseDouble(args[8]);
 			int radius = Integer.parseInt(args[9]);
+			int minY = Integer.parseInt(args[10]);
+			int maxY = Integer.parseInt(args[11]);
 			if(args.length == 11) {
-				drawImage = Boolean.parseBoolean(args[10]);
+				drawImage = Boolean.parseBoolean(args[12]);
 			}
 			estimator = new VeinEstimator(heightSeed, densitySeed, density, maxSpan, densityBonus,
-					areaHeight, areaSpan, heightLength, densityLength, radius);
+					areaHeight, areaSpan, heightLength, densityLength, radius, minY, maxY);
 		} catch (Exception e) {
 			estimator = getDefault();
 		}
@@ -114,6 +120,6 @@ public class VeinEstimator {
 	}
 	
 	public static VeinEstimator getDefault() {
-		return new VeinEstimator(1, 1, 0.5, 5, 0, 10, 10, 10, 80, 1000);
+		return new VeinEstimator(1, 1, 0.5, 5, 0, 10, 10, 10, 80, 1000, 1, 16);
 	}
 }
