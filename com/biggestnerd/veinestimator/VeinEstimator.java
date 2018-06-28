@@ -50,15 +50,18 @@ public class VeinEstimator {
 		for(int x = 0; x < two; x++) {
 			for(int z = 0; z < two; z++) {
 				if(distance(x - radius, z - radius) > sqr) continue;
+				double peakChance = 0;
 				for(int y = minY; y <= maxY; y++) {
-					if(Math.random() < Math.max(getOreChance(x - radius, y, z - radius), 0)) {
+					double chance = getOreChance(x - radius, y, z - radius);
+					if (chance > peakChance) peakChance = chance;
+					if(Math.random() < Math.max(chance, 0)) {
 						//System.out.println(x + ", " + y + ", " + z);
 						ores++;
-						if(drawImage) {
-							graphics.setPaint(heat(y));
-							graphics.drawLine(x, z, x, z);
-						}
 					}
+				}
+				if(peakChance > 0 && drawImage) {
+					graphics.setPaint(heat(peakChance, getVeinHeight(x,z)));
+					graphics.drawLine(x, z, x, z);
 				}
 			}
 		}
@@ -90,11 +93,12 @@ public class VeinEstimator {
 		return (x * x) + (z * z);
 	}
 	
-	private Color heat(int y) {
-		float value = ((float)y - minY) /(maxY - minY);
-		int r = (int) (255 * value);
-		int g = (int) (255 * (1 - value));
-		int b = (int) Math.min(255, 255 * (2 * value));
+	private Color heat(double pChance, double vH) {
+		float rvalue = (float) ((vH - (double) minY) /((double) maxY - (double)minY));
+		float gbvalue = (float) Math.min(1.0, (pChance / density)- densityBonus);
+		int r = (int) Math.max(0, Math.min(255, (255 * rvalue)));
+		int g = (int) (255 * gbvalue);
+		int b = (int) (255 * (1.0 - gbvalue));
 		return new Color(r,g,b);
 	}
 	
