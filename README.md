@@ -19,3 +19,10 @@ Example: java -jar VeinEstimator.jar 1 1 0.4 3 -0.2 10 10 10 80 1000 1 16
 | minY          | integer | minimum y ores can spawn |
 | maxY          | integer | maximum y ores can spawn
 | drawImage     | boolean | whether or not the program should visualize the vein in an image (default true, not required)|
+
+Color shading added by Programmerdan June 2018: 
+The more "green" the greater the peak density in that area. The more
+blue, the closer to the yMin of the vein's "center" is at that x,z --
+the more purple, the closer to the yMax of the vein's "center".
+Basically, the closer you are to yMin/yMax, the stronger you will
+observe the greeness while mining.
