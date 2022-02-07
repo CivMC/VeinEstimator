@@ -95,7 +95,7 @@ public class VeinEstimator {
 	
 	private Color heat(double pChance, double vH) {
 		float rvalue = (float) ((vH - (double) minY) /((double) maxY - (double)minY));
-		float gbvalue = (float) Math.min(1.0, (pChance / density)- densityBonus);
+		float gbvalue = (float) Math.max(0.0, Math.min(1.0, (pChance / density)- densityBonus));
 		int r = (int) Math.max(0, Math.min(255, (255 * rvalue)));
 		int g = (int) (255 * gbvalue);
 		int b = (int) (255 * (1.0 - gbvalue));
